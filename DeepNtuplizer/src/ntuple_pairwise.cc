@@ -210,7 +210,7 @@ void ntuple_pairwise::readEvent(const edm::Event& iEvent){
 
 //use either of these functions
 
-bool ntuple_pairwise::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  edm::View<pat::Jet> * coll){
+bool ntuple_pairwise::fillBranches(const pat::Jet & unsubjet, const pat::Jet & jet, const size_t& jetidx, const  edm::View<pat::Jet> * coll){
 
     math::XYZVector jetDir = jet.momentum().Unit();
     GlobalVector jetRefTrackDir(jet.px(),jet.py(),jet.pz());
@@ -219,12 +219,11 @@ bool ntuple_pairwise::fillBranches(const pat::Jet & jet, const size_t& jetidx, c
     std::vector<sorting::sortingClass<size_t> > sortedcharged, sortedneutrals;
 
     const float jet_uncorr_pt=jet.correctedJet("Uncorrected").pt();
-    const float jet_uncorr_e=jet.correctedJet("Uncorrected").energy();
 
     TrackInfoBuilder trackinfo(builder);
     //create collection first, to be able to do some sorting
-    for (unsigned int i = 0; i <  jet.numberOfDaughters(); i++){
-        const pat::PackedCandidate* PackedCandidate = dynamic_cast<const pat::PackedCandidate*>(jet.daughter(i));
+    for (unsigned int i = 0; i <  unsubjet.numberOfDaughters(); i++){
+        const pat::PackedCandidate* PackedCandidate = dynamic_cast<const pat::PackedCandidate*>(unsubjet.daughter(i));
         if(PackedCandidate){
             if(PackedCandidate->pt() < min_candidate_pt_) continue; 
             if(PackedCandidate->charge()!=0){
@@ -250,12 +249,12 @@ bool ntuple_pairwise::fillBranches(const pat::Jet & jet, const size_t& jetidx, c
 	deepntuples::TrackPairInfoBuilder trkpairinfo;
 	int ind_i = sortedcharged.at(i).get();
 	int ind_j = sortedcharged.at(j).get();
-	const pat::PackedCandidate* Part_i_  = dynamic_cast<const pat::PackedCandidate*>(jet.daughter(ind_i));
+	const pat::PackedCandidate* Part_i_  = dynamic_cast<const pat::PackedCandidate*>(unsubjet.daughter(ind_i));
 	
 	if(!Part_i_){
 	  std::cout << i << " Bug PackedCandidate " << j << std::endl;
 	}
-	const pat::PackedCandidate* Part_j_  = dynamic_cast<const pat::PackedCandidate*>(jet.daughter(ind_j));
+	const pat::PackedCandidate* Part_j_  = dynamic_cast<const pat::PackedCandidate*>(unsubjet.daughter(ind_j));
 	if(!Part_j_){
 	  std::cout << i << " Bug PackedCandidate " << j << std::endl;
 	}

@@ -31,7 +31,7 @@ public:
 
     //use either of these functions
 
-    bool fillBranches(const pat::Jet &, const size_t& jetidx, const  edm::View<pat::Jet> * coll=0);
+    bool fillBranches(const pat::Jet &, const pat::Jet &, const size_t& jetidx, const  edm::View<pat::Jet> * coll=0);
 
     void setTrackBuilderToken(const edm::ESGetToken<TransientTrackBuilder, TransientTrackRecord>& track_builder_token) {
 		track_builder_token_ = track_builder_token;
@@ -41,6 +41,8 @@ private:
 
     float jetradius_;
     float min_candidate_pt_ = -1;
+    bool sort_cand_by_pt_ = false;
+    bool usePuppi_;
 
     edm::ESHandle<TransientTrackBuilder> builder;
     edm::ESGetToken<TransientTrackBuilder, TransientTrackRecord> track_builder_token_;

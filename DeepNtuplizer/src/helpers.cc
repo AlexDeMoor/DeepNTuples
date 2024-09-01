@@ -22,6 +22,7 @@ std::vector<std::size_t> jet_electronsIds(const pat::Jet& jet, const std::vector
 }
 
 JetFlavor jet_flavour(const pat::Jet& jet,
+              const pat::Jet& unsubjet,
 		      const std::vector<reco::GenParticle>& gToBB,
 		      const std::vector<reco::GenParticle>& gToCC,
 		      const std::vector<reco::GenParticle>& neutrinosLepB,
@@ -33,8 +34,8 @@ JetFlavor jet_flavour(const pat::Jet& jet,
 		      int gentau_decaymode,
 		      const std::vector<int> tau_gen_charge,
 		      bool usePhysForLightAndUndefined) { 
-    int hflav = abs(jet.hadronFlavour());
-    int pflav = abs(jet.partonFlavour());
+    int hflav = abs(unsubjet.hadronFlavour());
+    int pflav = abs(unsubjet.partonFlavour());
     int physflav = 0;
     int jet_tauflav_b, jet_muflav_b, jet_elflav_b, jet_taudecaymode_b, jet_taucharge_b;
     if( !( jet.genJet() ) ){
@@ -46,8 +47,8 @@ JetFlavor jet_flavour(const pat::Jet& jet,
       }
     }
     if(jet.genParton()) physflav=abs(jet.genParton()->pdgId());
-    std::size_t nbs = jet.jetFlavourInfo().getbHadrons().size();
-    std::size_t ncs = jet.jetFlavourInfo().getcHadrons().size();
+    std::size_t nbs = unsubjet.jetFlavourInfo().getbHadrons().size();
+    std::size_t ncs = unsubjet.jetFlavourInfo().getcHadrons().size();
 
     unsigned int nbFromGSP(0);
     for (reco::GenParticle p : gToBB) {
@@ -225,6 +226,7 @@ std::tuple<int, int, int, float, float, float, float> calcVariables(const reco::
 
 	    pt_dr_log += std::log(part->pt()/dr);
         }
+        else continue;
 
         float deta   = daughter->eta() - jet->eta();
         float dphi   = reco::deltaPhi(daughter->phi(), jet->phi());

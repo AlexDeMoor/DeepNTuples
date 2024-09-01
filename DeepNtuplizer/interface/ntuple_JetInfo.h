@@ -31,7 +31,7 @@ public:
 
     //use either of these functions
 
-    bool fillBranches(const pat::Jet &, const size_t& jetidx, const  edm::View<pat::Jet> * coll=0);
+    bool fillBranches(const pat::Jet &, const pat::Jet &, const size_t& jetidx, const  edm::View<pat::Jet> * coll=0);
 
     void setAxis2Token(edm::EDGetTokenT<edm::ValueMap<float> > axis2Token) {
         axis2Token_ = axis2Token;
@@ -91,6 +91,10 @@ public:
         tausToken_ = tausToken;
     }
 
+    void setCentToken(const edm::EDGetTokenT<int>& centToken) {
+        centToken_ = centToken;
+    }
+
     void setUseHerwigCompatibleMatching(const bool use){
         useherwcompat_matching_=use;
     }
@@ -128,6 +132,7 @@ public:
     edm::EDGetTokenT<pat::MuonCollection> muonsToken_;       
     edm::EDGetTokenT<pat::ElectronCollection> electronsToken_;
     edm::EDGetTokenT<pat::TauCollection> tausToken_;
+    edm::EDGetTokenT<int> centToken_;
 
     edm::Handle<edm::Association<reco::GenJetCollection> > genJetMatchRecluster;
     edm::Handle<edm::Association<reco::GenJetCollection> > genJetMatchWithNu;
@@ -232,6 +237,9 @@ public:
     int isTaum1h2p_;
     int isTaum3h0p_;
     int isTaum3h1p_;
+
+    // Heavy ion variables
+    float cent_;
 
     //truth labeling with fallback to physics definition for light/gluon/undefined of standard flavor definition
     int isPhysB_;

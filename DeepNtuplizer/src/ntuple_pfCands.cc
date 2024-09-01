@@ -169,7 +169,8 @@ void ntuple_pfCands::readSetup(const edm::EventSetup& iSetup){
 
 void ntuple_pfCands::getInput(const edm::ParameterSet& iConfig){
 	min_candidate_pt_ = (iConfig.getParameter<double>("minCandidatePt"));
-    
+    sort_cand_by_pt_ = iConfig.getParameter<bool>("sort_cand_by_pt");
+    usePuppi_ = iConfig.getParameter<bool>("puppi");
 }
 
 void ntuple_pfCands::initBranches(TTree* tree){
@@ -285,7 +286,7 @@ void ntuple_pfCands::readEvent(const edm::Event& iEvent){
 
 //use either of these functions
 
-bool ntuple_pfCands::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  edm::View<pat::Jet> * coll){
+bool ntuple_pfCands::fillBranches(const pat::Jet & unsubjet, const pat::Jet & jet, const size_t& jetidx, const  edm::View<pat::Jet> * coll){
 
     float etasign = 1.;
     if (jet.eta()<0) etasign =-1.;
@@ -318,19 +319,28 @@ bool ntuple_pfCands::fillBranches(const pat::Jet & jet, const size_t& jetidx, co
 
     TrackInfoBuilder trackinfo(builder);
     //create collection first, to be able to do some sorting
-    for (unsigned int i = 0; i <  jet.numberOfDaughters(); i++){
-        const pat::PackedCandidate* PackedCandidate = dynamic_cast<const pat::PackedCandidate*>(jet.daughter(i));
+    for (unsigned int i = 0; i <  unsubjet.numberOfDaughters(); i++){
+        const pat::PackedCandidate* PackedCandidate = dynamic_cast<const pat::PackedCandidate*>(unsubjet.daughter(i));
         if(PackedCandidate){
             if(PackedCandidate->pt() < min_candidate_pt_) continue; 
             if(PackedCandidate->charge()!=0){
                 trackinfo.buildTrackInfo(PackedCandidate,jetDir,jetRefTrackDir,pv);
-                sortedcharged.push_back(sorting::sortingClass<size_t>
-                (i, trackinfo.getTrackSip2dSig(),
-                        -mindrsvpfcand(PackedCandidate), PackedCandidate->pt()/jet_uncorr_pt));
+                if (sort_cand_by_pt_)
+                  sortedcharged.push_back(sorting::sortingClass<size_t>
+                  (i, PackedCandidate->pt()/jet_uncorr_pt,
+                          trackinfo.getTrackSip2dSig(), -mindrsvpfcand(PackedCandidate)));
+                else
+                  sortedcharged.push_back(sorting::sortingClass<size_t>
+                  (i, trackinfo.getTrackSip2dSig(),
+                          -mindrsvpfcand(PackedCandidate), PackedCandidate->pt()/jet_uncorr_pt));
             }
             else{
-                sortedneutrals.push_back(sorting::sortingClass<size_t>
-                (i, -1, -mindrsvpfcand(PackedCandidate), PackedCandidate->pt()/jet_uncorr_pt));
+                if (sort_cand_by_pt_)
+                  sortedneutrals.push_back(sorting::sortingClass<size_t>
+                  (i, PackedCandidate->pt()/jet_uncorr_pt, -mindrsvpfcand(PackedCandidate), -1));
+                else
+                  sortedneutrals.push_back(sorting::sortingClass<size_t>
+                  (i, -1, -mindrsvpfcand(PackedCandidate), PackedCandidate->pt()/jet_uncorr_pt));
             }
         }
     }
@@ -343,8 +353,8 @@ bool ntuple_pfCands::fillBranches(const pat::Jet & jet, const size_t& jetidx, co
 		sortedchargedindices=sorting::invertSortingVector(sortedcharged);
 		sortedneutralsindices=sorting::invertSortingVector(sortedneutrals);
 
-    for (unsigned int i = 0; i <  jet.numberOfDaughters(); i++){
-        const pat::PackedCandidate* PackedCandidate_ = dynamic_cast<const pat::PackedCandidate*>(jet.daughter(i));
+    for (unsigned int i = 0; i <  unsubjet.numberOfDaughters(); i++){
+        const pat::PackedCandidate* PackedCandidate_ = dynamic_cast<const pat::PackedCandidate*>(unsubjet.daughter(i));
         //const auto& PackedCandidate_=s.get();
         if(!PackedCandidate_) continue;
         if(PackedCandidate_->pt() < min_candidate_pt_) continue; 
@@ -428,7 +438,7 @@ bool ntuple_pfCands::fillBranches(const pat::Jet & jet, const size_t& jetidx, co
             Cpfcan_vertexRef_mass_[fillntupleentry]=PackedCandidate_->vertexRef()->p4().M();
 
 
-            Cpfcan_puppiw_[fillntupleentry] = PackedCandidate_->puppiWeight();
+            Cpfcan_puppiw_[fillntupleentry] = usePuppi_ ? PackedCandidate_->puppiWeight() : 1.0;
 
             trackinfo.buildTrackInfo(PackedCandidate_,jetDir,jetRefTrackDir,pv);
 
@@ -500,7 +510,7 @@ bool ntuple_pfCands::fillBranches(const pat::Jet & jet, const size_t& jetidx, co
             Npfcan_ptrel_[fillntupleentry] = catchInfsAndBound(PackedCandidate_->pt()/jet_uncorr_pt,0,-1,0,-1);
             Npfcan_erel_[fillntupleentry] = catchInfsAndBound(PackedCandidate_->energy()/jet_uncorr_e,0,-1,0,-1);
             Npfcan_e_[fillntupleentry] = PackedCandidate_->energy();
-            Npfcan_puppiw_[fillntupleentry] = PackedCandidate_->puppiWeight();
+            Npfcan_puppiw_[fillntupleentry] = usePuppi_ ? PackedCandidate_->puppiWeight() : 1.0;
             Npfcan_phirel_[fillntupleentry] = catchInfsAndBound(fabs(reco::deltaPhi(PackedCandidate_->phi(),jet.phi())),0,-2,0,-0.5);
             Npfcan_etarel_[fillntupleentry] = catchInfsAndBound(fabs(PackedCandidate_->eta()-jet.eta()),0,-2,0,-0.5);
             Npfcan_deltaR_[fillntupleentry] = catchInfsAndBound(reco::deltaR(*PackedCandidate_,jet),0,-0.6,0,-0.6);

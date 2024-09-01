@@ -43,6 +43,7 @@ class ntuple_LT: public ntuple_content{
 
   float jetradius_;
   float min_candidate_pt_ = -1;
+  bool sort_cand_by_pt_ = false;
 
   edm::ESHandle<TransientTrackBuilder> builder;
   edm::ESGetToken<TransientTrackBuilder, TransientTrackRecord> track_builder_token_;

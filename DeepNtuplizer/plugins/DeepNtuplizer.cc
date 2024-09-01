@@ -33,6 +33,7 @@
 #include "DataFormats/PatCandidates/interface/Jet.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Electron.h"
+#include "DataFormats/Common/interface/AssociationMap.h"
 
 // for ivf
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
@@ -88,6 +89,8 @@ private:
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> svToken_;
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0KsToken_;
   edm::EDGetTokenT<edm::View<pat::Jet> >      jetToken_;
+  typedef edm::AssociationMap<edm::OneToOne<reco::JetView, reco::JetView> > JetMatchMap;
+  edm::EDGetTokenT<JetMatchMap> unsubjetMapToken_;
   edm::EDGetTokenT<std::vector<PileupSummaryInfo> > puToken_;
   edm::EDGetTokenT<double> rhoToken_;
   edm::EDGetTokenT< edm::View<reco::BaseTagInfo> > pixHitsToken_;
@@ -118,6 +121,7 @@ DeepNtuplizer::DeepNtuplizer(const edm::ParameterSet& iConfig):
   svToken_(consumes<reco::VertexCompositePtrCandidateCollection>(iConfig.getParameter<edm::InputTag>("secVertices"))),
   v0KsToken_(consumes<reco::VertexCompositePtrCandidateCollection>(iConfig.getParameter<edm::InputTag>("V0_ks"))),
   jetToken_(consumes<edm::View<pat::Jet> >(iConfig.getParameter<edm::InputTag>("jets"))),
+  unsubjetMapToken_(consumes<JetMatchMap>(iConfig.getParameter<edm::InputTag>("unsubjet_map"))),
   puToken_(consumes<std::vector<PileupSummaryInfo >>(iConfig.getParameter<edm::InputTag>("pupInfo"))),
   rhoToken_(consumes<double>(iConfig.getParameter<edm::InputTag>("rhoInfo"))),
   pixHitsToken_(consumes< edm::View<reco::BaseTagInfo> > (iConfig.getParameter<edm::InputTag>("pixelhit"))),
@@ -170,6 +174,8 @@ DeepNtuplizer::DeepNtuplizer(const edm::ParameterSet& iConfig):
   jetinfo->setMuonsToken(consumes<pat::MuonCollection>(iConfig.getParameter<edm::InputTag>("muons")));
   jetinfo->setElectronsToken(consumes<pat::ElectronCollection>(iConfig.getParameter<edm::InputTag>("electrons")));
   jetinfo->setTausToken(consumes<pat::TauCollection>(iConfig.getParameter<edm::InputTag>("taus")));
+  if (iConfig.existsAs<edm::InputTag>("cent"))
+    jetinfo->setCentToken(consumes<int>(iConfig.getParameter<edm::InputTag>("cent")));
 
   addModule(jetinfo, "jetinfo");
 
@@ -244,6 +250,7 @@ DeepNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   edm::Handle<edm::View<pat::Jet> > jets;
   iEvent.getByToken(jetToken_, jets);
+  const auto& unsubjet_map = iEvent.getHandle(unsubjetMapToken_);
 
   edm::Handle< edm::View<reco::BaseTagInfo> > pixHits;
   iEvent.getByToken(pixHitsToken_, pixHits);
@@ -275,6 +282,8 @@ DeepNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     size_t jetidx=indices.at(j);
     jetIter = jets->begin()+jetidx;
     const pat::Jet& jet = *jetIter;
+    const auto& unsubjet_ref = unsubjet_map.isValid() ? (*unsubjet_map)[jets->refAt(jetidx)] : edm::RefToBase<reco::Jet>();
+    const auto& unsubjet = unsubjet_ref.isNonnull() ? *dynamic_cast<const pat::Jet*>(unsubjet_ref.get()) : jet;
 
     if(jet.genJet())
       njetswithgenjet_++;
@@ -282,7 +291,7 @@ DeepNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     bool writejet=true;
     size_t idx = 0;
     for(auto& m:modules_){
-      if(! m->fillBranches(jet, jetidx, jets.product())){
+      if(! m->fillBranches(unsubjet, jet, jetidx, jets.product())){
 	writejet=false;
 	if(applySelection_) break;
       }
