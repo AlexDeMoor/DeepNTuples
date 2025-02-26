@@ -263,7 +263,7 @@ process.TFileService = cms.Service("TFileService",
 
 # DeepNtuplizer
 process.load("DeepNTuples.DeepNtuplizer.DeepNtuplizer_cfi")
-process.deepntuplizer.jets = cms.InputTag('selectedUpdatedPatJetsDeepFlavour')
+process.deepntuplizer.jets = cms.InputTag('selectedCleanJets')
 process.deepntuplizer.bDiscriminators = bTagDiscriminators 
 process.deepntuplizer.bDiscriminators.append('pfCombinedMVAV2BJetTags')
 process.deepntuplizer.LooseSVs = cms.InputTag("looseIVFinclusiveCandidateSecondaryVertices")
@@ -296,7 +296,7 @@ process.deepntuplizer.gluonReduction  = cms.double(options.gluonReduction)
 #Domain region
 from DeepNTuples.DeepNtuplizer.emu_skim_cff import emuSelection
 print ("add emu process selection")
-process = emuSelection(process,"pfParticleNetFromMiniAODAK4PuppiCentralJetTags");
+process = emuSelection(process,"pfParticleNetFromMiniAODAK4PuppiCentral");
 process.deepntuplizer.leptonPairs = cms.InputTag("emuPairs")
 
 from PhysicsTools.PatAlgos.tools.coreTools import runOnData

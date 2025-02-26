@@ -1,3 +1,4 @@
+### Code from Raffaele Gerosa : https://gitlab.cern.ch/rgerosa/particlenetstudiesrun2 ###
 import FWCore.ParameterSet.Config as cms
 
 ## trigger selection

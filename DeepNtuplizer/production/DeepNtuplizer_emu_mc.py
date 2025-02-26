@@ -231,7 +231,6 @@ if hasattr(process,'updatedPatJetsTransientCorrectedDeepFlavour'):
 else:
     raise ValueError('I could not find updatedPatJetsTransientCorrectedDeepFlavour to embed the tagInfos, please check the cfg')
 
-
 # Very Loose IVF SV collection
 from PhysicsTools.PatAlgos.tools.helpers import loadWithPrefix
 loadWithPrefix(process, 'RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff', "looseIVF")
@@ -255,7 +254,7 @@ process.TFileService = cms.Service("TFileService",
 
 # DeepNtuplizer
 process.load("DeepNTuples.DeepNtuplizer.DeepNtuplizer_cfi")
-process.deepntuplizer.jets = cms.InputTag('selectedUpdatedPatJetsDeepFlavour')
+process.deepntuplizer.jets = cms.InputTag('selectedCleanJets')
 process.deepntuplizer.bDiscriminators = bTagDiscriminators 
 process.deepntuplizer.bDiscriminators.append('pfCombinedMVAV2BJetTags')
 process.deepntuplizer.LooseSVs = cms.InputTag("looseIVFinclusiveCandidateSecondaryVertices")
@@ -288,7 +287,7 @@ process.deepntuplizer.gluonReduction  = cms.double(options.gluonReduction)
 #Domain region
 from DeepNTuples.DeepNtuplizer.emu_skim_cff import emuSelection
 print ("add emu process selection")
-process = emuSelection(process,"pfParticleNetFromMiniAODAK4PuppiCentralJetTags");
+process = emuSelection(process, "pfParticleNetFromMiniAODAK4PuppiCentral");
 process.deepntuplizer.leptonPairs = cms.InputTag("emuPairs")
 
 from PhysicsTools.PatAlgos.tools.coreTools import runOnData

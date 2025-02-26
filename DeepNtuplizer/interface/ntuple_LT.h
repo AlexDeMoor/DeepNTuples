@@ -19,7 +19,7 @@ class ntuple_LT: public ntuple_content{
  public:
 
  ntuple_LT():ntuple_content(),jetradius_(0.4),
-    n_Cpfcand_(0),n_Npfcand_(0){}
+    n_LTcand_(0){}
 
   void setJetRadius(const float& radius){jetradius_=radius;}
   void getInput(const edm::ParameterSet& iConfig);
@@ -51,53 +51,52 @@ class ntuple_LT: public ntuple_content{
   edm::Handle<edm::View<reco::Candidate>> LTs;
 
   int n_LT_;
-  int n_Cpfcand_;
-  int n_Npfcand_;
+  int n_LTcand_;
 
-  static constexpr size_t max_pfcand_=50;
+  static constexpr size_t max_ltcand_=50;
 
-  float  LT_pt_[max_pfcand_];
-  float  LT_eta_[max_pfcand_];
-  float  LT_phi_[max_pfcand_];
-  float  LT_e_[max_pfcand_];
+  float  LT_pt_[max_ltcand_];
+  float  LT_eta_[max_ltcand_];
+  float  LT_phi_[max_ltcand_];
+  float  LT_e_[max_ltcand_];
 
-  float  LT_puppiw_[max_pfcand_];
-  float  LT_VTX_ass_[max_pfcand_];
-  float  LT_dz_[max_pfcand_];
+  float  LT_puppiw_[max_ltcand_];
+  float  LT_VTX_ass_[max_ltcand_];
+  float  LT_dz_[max_ltcand_];
 
-  float LT_BtagPf_trackEtaRel_[max_pfcand_];
-  float LT_BtagPf_trackPtRel_[max_pfcand_];
-  float LT_BtagPf_trackPPar_[max_pfcand_];
-  float LT_BtagPf_trackDeltaR_[max_pfcand_];
-  float LT_BtagPf_trackPParRatio_[max_pfcand_];
-  float LT_BtagPf_trackSip3dVal_[max_pfcand_];
-  float LT_BtagPf_trackSip3dSig_[max_pfcand_];
-  float LT_BtagPf_trackSip2dVal_[max_pfcand_];
-  float LT_BtagPf_trackSip2dSig_[max_pfcand_];
-  float LT_BtagPf_trackDecayLen_[max_pfcand_];
-  float LT_BtagPf_trackJetDistVal_[max_pfcand_];
+  float LT_BtagPf_trackEtaRel_[max_ltcand_];
+  float LT_BtagPf_trackPtRel_[max_ltcand_];
+  float LT_BtagPf_trackPPar_[max_ltcand_];
+  float LT_BtagPf_trackDeltaR_[max_ltcand_];
+  float LT_BtagPf_trackPParRatio_[max_ltcand_];
+  float LT_BtagPf_trackSip3dVal_[max_ltcand_];
+  float LT_BtagPf_trackSip3dSig_[max_ltcand_];
+  float LT_BtagPf_trackSip2dVal_[max_ltcand_];
+  float LT_BtagPf_trackSip2dSig_[max_ltcand_];
+  float LT_BtagPf_trackDecayLen_[max_ltcand_];
+  float LT_BtagPf_trackJetDistVal_[max_ltcand_];
                                                                                                                                         
-  float LT_charge_[max_pfcand_];
-  float LT_chi2_[max_pfcand_];
-  float LT_quality_[max_pfcand_];
-  float LT_drminsv_[max_pfcand_];
-  float LT_distminsvold_[max_pfcand_];
-  float LT_distminsv_[max_pfcand_];
-  float LT_distminsv2_[max_pfcand_];
+  float LT_charge_[max_ltcand_];
+  float LT_chi2_[max_ltcand_];
+  float LT_quality_[max_ltcand_];
+  float LT_drminsv_[max_ltcand_];
+  float LT_distminsvold_[max_ltcand_];
+  float LT_distminsv_[max_ltcand_];
+  float LT_distminsv2_[max_ltcand_];
 
-  float LT_lostInnerHits_[max_pfcand_];
-  float LT_numberOfPixelHits_[max_pfcand_];
-  float LT_numberOfStripHits_[max_pfcand_];
+  float LT_lostInnerHits_[max_ltcand_];
+  float LT_numberOfPixelHits_[max_ltcand_];
+  float LT_numberOfStripHits_[max_ltcand_];
 
-  float LT_pdgID_[max_pfcand_];
-  float LT_HadFrac_[max_pfcand_];
-  float LT_CaloFrac_[max_pfcand_];
+  float LT_pdgID_[max_ltcand_];
+  float LT_HadFrac_[max_ltcand_];
+  float LT_CaloFrac_[max_ltcand_];
 
-  float mindrsvpfcand(const pat::PackedCandidate* pfcand);
-  float mindistsvpfcandold(const reco::TransientTrack track);
-  float mindistsvpfcand(const reco::TransientTrack track);
-  GlobalPoint mingpsvpfcand(const reco::TransientTrack track);
-  GlobalPoint gppvpfcand(const reco::TransientTrack track, GlobalVector direction, const reco::Vertex vertex);
+  float mindrsvltcand(const pat::PackedCandidate* pfcand);
+  float mindistsvltcandold(const reco::TransientTrack track);
+  float mindistsvltcand(const reco::TransientTrack track);
+  GlobalPoint mingpsvltcand(const reco::TransientTrack track);
+  GlobalPoint gppvltcand(const reco::TransientTrack track, GlobalVector direction, const reco::Vertex vertex);
 
 };
 

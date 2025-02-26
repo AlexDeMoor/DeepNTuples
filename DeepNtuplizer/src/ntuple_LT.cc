@@ -165,52 +165,52 @@ void ntuple_LT::getInput(const edm::ParameterSet& iConfig){
 
 void ntuple_LT::initBranches(TTree* tree){
 
+  addBranch(tree,"n_LTcand", &n_LTcand_,"n_LTcand_/I");
   addBranch(tree,"n_LT", &n_LT_,"n_LT_/I");
 
-  addBranch(tree,"LT_pt", &LT_pt_,"LT_pt_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_eta", &LT_eta_,"LT_eta_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_phi", &LT_phi_,"LT_phi_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_e", &LT_e_,"LT_e_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_pt", &LT_pt_,"LT_pt_[n_LTcand_]/F");
+  addBranch(tree,"LT_eta", &LT_eta_,"LT_eta_[n_LTcand_]/F");
+  addBranch(tree,"LT_phi", &LT_phi_,"LT_phi_[n_LTcand_]/F");
+  addBranch(tree,"LT_e", &LT_e_,"LT_e_[n_LTcand_]/F");
 
-  addBranch(tree,"LT_puppiw",&LT_puppiw_,"LT_puppiw_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_dz",&LT_dz_,"LT_dz_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_puppiw",&LT_puppiw_,"LT_puppiw_[n_LTcand_]/F");
+  addBranch(tree,"LT_dz",&LT_dz_,"LT_dz_[n_LTcand_]/F");
 
-  addBranch(tree,"LT_drminsv",&LT_drminsv_,"LT_drminsv_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_distminsvold",&LT_distminsvold_,"LT_distminsvold_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_distminsv",&LT_distminsv_,"LT_distminsv_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_distminsv2",&LT_distminsv2_,"LT_distminsv2_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_drminsv",&LT_drminsv_,"LT_drminsv_[n_LTcand_]/F");
+  addBranch(tree,"LT_distminsvold",&LT_distminsvold_,"LT_distminsvold_[n_LTcand_]/F");
+  addBranch(tree,"LT_distminsv",&LT_distminsv_,"LT_distminsv_[n_LTcand_]/F");
+  addBranch(tree,"LT_distminsv2",&LT_distminsv2_,"LT_distminsv2_[n_LTcand_]/F");
   
-  addBranch(tree,"LT_BtagPf_trackEtaRel",&LT_BtagPf_trackEtaRel_,"LT_BtagPf_trackEtaRel_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackPtRel",&LT_BtagPf_trackPtRel_,"LT_BtagPf_trackPtRel_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackPPar",&LT_BtagPf_trackPPar_,"LT_BtagPf_trackPPar_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackDeltaR",&LT_BtagPf_trackDeltaR_,"LT_BtagPf_trackDeltaR_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackPParRatio",&LT_BtagPf_trackPParRatio_,"LT_BtagPf_trackPParRatio[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackSip3dVal",&LT_BtagPf_trackSip3dVal_,"LT_BtagPf_trackSip3dVal_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackSip3dSig",&LT_BtagPf_trackSip3dSig_,"LT_BtagPf_trackSip3dSig_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackSip2dVal",&LT_BtagPf_trackSip2dVal_,"LT_BtagPf_trackSip2dVal_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackSip2dSig",&LT_BtagPf_trackSip2dSig_,"LT_BtagPf_trackSip2dSig_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackDecayLen",&LT_BtagPf_trackDecayLen_,"LT_BtagPf_trackDecayLen_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_BtagPf_trackJetDistVal",&LT_BtagPf_trackJetDistVal_,"LT_BtagPf_trackJetDistVal_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackEtaRel",&LT_BtagPf_trackEtaRel_,"LT_BtagPf_trackEtaRel_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackPtRel",&LT_BtagPf_trackPtRel_,"LT_BtagPf_trackPtRel_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackPPar",&LT_BtagPf_trackPPar_,"LT_BtagPf_trackPPar_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackDeltaR",&LT_BtagPf_trackDeltaR_,"LT_BtagPf_trackDeltaR_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackPParRatio",&LT_BtagPf_trackPParRatio_,"LT_BtagPf_trackPParRatio[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackSip3dVal",&LT_BtagPf_trackSip3dVal_,"LT_BtagPf_trackSip3dVal_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackSip3dSig",&LT_BtagPf_trackSip3dSig_,"LT_BtagPf_trackSip3dSig_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackSip2dVal",&LT_BtagPf_trackSip2dVal_,"LT_BtagPf_trackSip2dVal_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackSip2dSig",&LT_BtagPf_trackSip2dSig_,"LT_BtagPf_trackSip2dSig_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackDecayLen",&LT_BtagPf_trackDecayLen_,"LT_BtagPf_trackDecayLen_[n_LTcand_]/F");
+  addBranch(tree,"LT_BtagPf_trackJetDistVal",&LT_BtagPf_trackJetDistVal_,"LT_BtagPf_trackJetDistVal_[n_LTcand_]/F");
   
-  addBranch(tree,"LT_charge",&LT_charge_,"LT_charge_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_chi2",&LT_chi2_,"LT_chi2_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_quality",&LT_quality_,"LT_quality_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_charge",&LT_charge_,"LT_charge_[n_LTcand_]/F");
+  addBranch(tree,"LT_chi2",&LT_chi2_,"LT_chi2_[n_LTcand_]/F");
+  addBranch(tree,"LT_quality",&LT_quality_,"LT_quality_[n_LTcand_]/F");
   
-  addBranch(tree,"LT_lostInnerHits",&LT_lostInnerHits_,"LT_lostInnerHits_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_numberOfPixelHits",&LT_numberOfPixelHits_,"LT_numberOfPixelHits_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_numberOfStripHits",&LT_numberOfStripHits_,"LT_numberOfStripHits_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_lostInnerHits",&LT_lostInnerHits_,"LT_lostInnerHits_[n_LTcand_]/F");
+  addBranch(tree,"LT_numberOfPixelHits",&LT_numberOfPixelHits_,"LT_numberOfPixelHits_[n_LTcand_]/F");
+  addBranch(tree,"LT_numberOfStripHits",&LT_numberOfStripHits_,"LT_numberOfStripHits_[n_LTcand_]/F");
   
-  addBranch(tree,"LT_pdgID",&LT_pdgID_,"LT_pdgID_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_HadFrac",&LT_HadFrac_,"LT_HadFrac_[n_Cpfcand_]/F");
-  addBranch(tree,"LT_CaloFrac",&LT_CaloFrac_,"LT_CaloFrac_[n_Cpfcand_]/F");
+  addBranch(tree,"LT_pdgID",&LT_pdgID_,"LT_pdgID_[n_LTcand_]/F");
+  addBranch(tree,"LT_HadFrac",&LT_HadFrac_,"LT_HadFrac_[n_LTcand_]/F");
+  addBranch(tree,"LT_CaloFrac",&LT_CaloFrac_,"LT_CaloFrac_[n_LTcand_]/F");
   
 }
 
 void ntuple_LT::readEvent(const edm::Event& iEvent){
 
     iEvent.getByToken(ltToken_, LTs);
-    n_Npfcand_=0;
-    n_Cpfcand_=0;
+    n_LTcand_=0;
 
 }
 
@@ -240,7 +240,7 @@ bool ntuple_LT::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  
 	  trackinfo.buildTrackInfo(PackedCandidate,jetDir,jetRefTrackDir,pv);
 	  sortedcharged.push_back(sorting::sortingClass<size_t>
 				  (i, trackinfo.getTrackSip2dSig(),
-				   -mindrsvpfcand(PackedCandidate), PackedCandidate->pt()/jet_uncorr_pt));
+				   -mindrsvltcand(PackedCandidate), PackedCandidate->pt()/jet_uncorr_pt));
 	  cpfPtrs.push_back(cand);
 	  n_lts++;
 	}
@@ -248,19 +248,19 @@ bool ntuple_LT::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  
     }
 
     std::sort(sortedcharged.begin(),sortedcharged.end(),sorting::sortingClass<size_t>::compareByABCInv);
-    n_Cpfcand_ = std::min(sortedcharged.size(),max_pfcand_);
+    n_LTcand_ = std::min(sortedcharged.size(),max_ltcand_);
 
     std::vector<size_t> sortedchargedindices;
     sortedchargedindices=sorting::invertSortingVector(sortedcharged);
 
-    for (unsigned int i = 0; i <  (unsigned int)n_Cpfcand_; i++){
+    for (unsigned int i = 0; i <  (unsigned int)n_LTcand_; i++){
       const auto *PackedCandidate_ = dynamic_cast<const pat::PackedCandidate*>(&(*cpfPtrs.at(i)));
       //const auto& PackedCandidate_=s.get();
       if(!PackedCandidate_) continue;
       if(PackedCandidate_->pt() < min_candidate_pt_) continue; 
 
         // get the dr with the closest sv
-      float drminpfcandsv_ = mindrsvpfcand(PackedCandidate_);
+      float drminltcandsv_ = mindrsvltcand(PackedCandidate_);
 
       float pdgid_;
       if (abs(PackedCandidate_->pdgId()) == 11 and PackedCandidate_->charge() != 0){
@@ -294,8 +294,8 @@ bool ntuple_LT::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  
       /// Split to charged and neutral candidates
       if(PackedCandidate_->charge()!=0 ){
 
-	size_t fillntupleentry= sortedchargedindices.at(i);
-	if(fillntupleentry>=max_pfcand_) continue;
+	size_t fillntupleentry= sortedchargedindices.at(sortedcharged[i].get());
+	if(fillntupleentry>=(int)max_ltcand_) continue;
 
 	LT_pt_[fillntupleentry] = PackedCandidate_->pt();
 	LT_eta_[fillntupleentry] = PackedCandidate_->eta();
@@ -317,11 +317,11 @@ bool ntuple_LT::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  
 	trackinfo.buildTrackInfo(PackedCandidate_,jetDir,jetRefTrackDir,pv);
 
 	const reco::TransientTrack ttrack = trackinfo.getTTrack();
-	float mindistsvold = mindistsvpfcandold(ttrack);
+	float mindistsvold = mindistsvltcandold(ttrack);
 
 	LT_distminsvold_[fillntupleentry] = mindistsvold;
 
-	float mindistsv = mindistsvpfcand(ttrack);
+	float mindistsv = mindistsvltcand(ttrack);
 	float eng_mindistsv = std::log(std::fabs(mindistsv)+1.0);
 
 	LT_distminsv_[fillntupleentry] = mindistsv;
@@ -341,8 +341,10 @@ bool ntuple_LT::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  
 
 	float cand_charge_ = PackedCandidate_->charge();
 	LT_charge_[fillntupleentry] = cand_charge_;
+	LT_chi2_[fillntupleentry] = PackedCandidate_->hasTrackDetails() ? catchInfsAndBound(PackedCandidate_->pseudoTrack().normalizedChi2(),300,-1,300) : -1;
+	LT_quality_[fillntupleentry] = PackedCandidate_->hasTrackDetails() ? PackedCandidate_->pseudoTrack().qualityMask() : (1 << reco::TrackBase::loose);
 
-	LT_drminsv_[fillntupleentry] = catchInfsAndBound(drminpfcandsv_,0,-0.4,0,-0.4);
+	LT_drminsv_[fillntupleentry] = catchInfsAndBound(drminltcandsv_,0,-0.4,0,-0.4);
 
 	LT_lostInnerHits_[fillntupleentry] = catchInfs(PackedCandidate_->lostInnerHits(),2);
 	LT_numberOfPixelHits_[fillntupleentry] = catchInfs(PackedCandidate_->numberOfPixelHits(),-1);
@@ -356,7 +358,7 @@ bool ntuple_LT::fillBranches(const pat::Jet & jet, const size_t& jetidx, const  
 }
 
 
-float ntuple_LT::mindrsvpfcand(const pat::PackedCandidate* pfcand) {
+float ntuple_LT::mindrsvltcand(const pat::PackedCandidate* pfcand) {
 
   float mindr_ = jetradius_;
   for (unsigned int i=0; i<secVertices()->size(); ++i) {
@@ -369,7 +371,7 @@ float ntuple_LT::mindrsvpfcand(const pat::PackedCandidate* pfcand) {
   return mindr_;
 }
 
-float ntuple_LT::mindistsvpfcandold(const reco::TransientTrack track) {
+float ntuple_LT::mindistsvltcandold(const reco::TransientTrack track) {
 
   float mindist_ = 999.999;
   float out_dist = 0.0;
@@ -409,7 +411,7 @@ float ntuple_LT::mindistsvpfcandold(const reco::TransientTrack track) {
   return out_dist;
 }
 
-GlobalPoint ntuple_LT::mingpsvpfcand(const reco::TransientTrack track) {
+GlobalPoint ntuple_LT::mingpsvltcand(const reco::TransientTrack track) {
 
   float mindist_ = 999.999;
   GlobalPoint out_dist(0.0,0.0,0.0);
@@ -447,7 +449,7 @@ GlobalPoint ntuple_LT::mingpsvpfcand(const reco::TransientTrack track) {
   return out_dist;
 }
 
-GlobalPoint ntuple_LT::gppvpfcand(const reco::TransientTrack track, const GlobalVector direction, const reco::Vertex vertex) {
+GlobalPoint ntuple_LT::gppvltcand(const reco::TransientTrack track, const GlobalVector direction, const reco::Vertex vertex) {
 
   float mindist_ = 999.999;
   float dist = 0.;
@@ -476,7 +478,7 @@ GlobalPoint ntuple_LT::gppvpfcand(const reco::TransientTrack track, const Global
   return out_dist;
 }
 
-float ntuple_LT::mindistsvpfcand(const reco::TransientTrack track) {
+float ntuple_LT::mindistsvltcand(const reco::TransientTrack track) {
 
   float mindist_ = 999.999;
   float out_dist = 0.0;
