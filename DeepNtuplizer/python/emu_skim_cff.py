@@ -121,7 +121,7 @@ def emuSelection(process,scoreLabel="pfParticleNetAK4base"):
     from PhysicsTools.PatAlgos.selectionLayer1.jetSelector_cfi import selectedPatJets
     process.selectedCleanJets = selectedPatJets.clone();
     process.selectedCleanJets.src = cms.InputTag("cleanJets");
-    process.selectedCleanJets.cut = cms.string('correctedJet("Uncorrected").pt() > 25 && abs(eta) < 2.5 && bDiscriminator("'+scoreLabel+'JetTags:probb")+bDiscriminator("'+scoreLabel+'JetTags:probbb") > 0.1');
+    process.selectedCleanJets.cut = cms.string('correctedJet("Uncorrected").pt() > 25 && abs(eta) < 2.5 && bDiscriminator("'+scoreLabel+'JetTags:probb")/(bDiscriminator("'+scoreLabel+'JetTags:probb")+bDiscriminator("'+scoreLabel+'JetTags:probc")+bDiscriminator("'+scoreLabel+'JetTags:probuds")+bDiscriminator("'+scoreLabel+'JetTags:probg")) > 0.1');
     process.selectedCleanJets.filter = cms.bool(False)
         
     process.filterCleanJets = cms.EDFilter("PATCandViewCountFilter",
