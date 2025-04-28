@@ -94,7 +94,7 @@ void ntuple_JetInfo::initBranches(TTree* tree){
     // jet regression
     addBranch(tree,"jet_genmatch_pt", &jet_genmatch_pt_);
     addBranch(tree,"jet_genmatch_wnu_pt", &jet_genmatch_wnu_pt_);
-    addBranch(tree,"&jet_genmatch_lep_vis_pt", &jet_genmatch_lep_vis_pt_);
+    addBranch(tree,"jet_genmatch_lep_vis_pt", &jet_genmatch_lep_vis_pt_);
     addBranch(tree,"jet_mumatch_pt", &jet_mumatch_pt_);
     addBranch(tree,"jet_elematch_pt", &jet_elematch_pt_);
     addBranch(tree,"jet_taumatch_pt", &jet_taumatch_pt_);
